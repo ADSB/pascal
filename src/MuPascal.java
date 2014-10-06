@@ -11,10 +11,12 @@ public class MuPascal {
 		int rows;
 
 		do {
+			System.out.print("Enter number of Pascal rows: ");
 			rows = getRows();
 			triangle = new ArrayList<List<Long>>(rows);
 			populateTriangle(rows);
 			printTriangle();
+			System.out.println();
 		} while (rows > 0);
 	}
 
@@ -41,17 +43,33 @@ public class MuPascal {
 	}
 
 	public static void printTriangle() {
+		int length = 0;
+		int size = triangle.size();
 		String buffer = "";
 		String line;
-		int size = triangle.size();
+		String token;
+
+		for (List<Long> list: triangle) {
+			for (Long cell: list) {
+				if (length < (cell + "").length()) {
+					length = (cell + "").length();
+				}
+			}
+		}
 
 		for (int i = 0; i < size; i++) {
 			line = "";
 			for (int j = 0; j < size - i - 1; j++) {
-				line += " ";
+				for (int k = 0; k < length / 2 + 1; k++) {
+					line += " ";
+				}
 			}
 			for (Long cell: triangle.get(i)) {
-				line += cell + " ";
+				token = cell + " ";
+				for (int k = 0; k < length - (cell + "").length(); k++) {
+					token += " ";
+				}
+				line += token;
 			}
 			buffer += line.substring(0, line.length() - 1) + "\n";
 		}
